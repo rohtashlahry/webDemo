@@ -1,18 +1,15 @@
 import React, { useState } from 'react';
-import './signin.css'; // Import the CSS file for styling
+import './signin.css';
 import { TextField, Button } from '@mui/material';
-import { storeUser } from '../../../utils/localStorageUtils'; // Adjust the path as per your file structure
+import { storeUser } from '../../../utils/localStorageUtils'; 
 
-const SignIn: React.FC = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+const SignIn = () => {
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
   const handleSignIn = (e: React.FormEvent) => {
     e.preventDefault();
-    // Perform authentication logic here (e.g., API call)
-
-    // Example: Storing user information in localStorage
-    storeUser({ username, email: '' }); // Replace with actual user data
+    storeUser({ username, email: '' });
   };
 
   return (
@@ -25,7 +22,7 @@ const SignIn: React.FC = () => {
             variant="outlined"
             fullWidth
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e: any) => setUsername(e.target.value)}
           />
         </div>
         <div className="form-group">
@@ -35,7 +32,7 @@ const SignIn: React.FC = () => {
             variant="outlined"
             fullWidth
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e: any) => setPassword(e.target.value)}
           />
         </div>
         <Button type="submit" variant="contained" color="primary" fullWidth>

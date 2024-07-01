@@ -1,10 +1,9 @@
-// Welcome.tsx
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getUser, clearUser } from '../../utils/localStorageUtils'; // Adjust the import path as needed
 import "./userdashboard.css"
 
-const UserDashboard: React.FC = () => {
+const UserDashboard = () => {
   const navigate = useNavigate();
   const user = getUser();
 

@@ -28,7 +28,7 @@ const Favourites = () => {
         <h2>Favourites Meal</h2>
       </div>
       <div className="favourite-list-container">
-        {favouriteList.map((meal: any) => (
+        {favouriteList?.map((meal: any) => (
           <div key={meal.idMeal} className="meal-card">
             <img
               src={meal.strMealThumb}

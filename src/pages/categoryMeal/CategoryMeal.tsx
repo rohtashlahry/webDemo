@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { fetchMealsByCategory } from "../../service/apiService"; // Adjust the path as per your file structure
-import "./categoryMeals.css"; // Import the CSS file for styling
+import { fetchMealsByCategory } from "../../service/apiService";
+import "./categoryMeals.css";
 import { getUser, storeUser } from "../../utils/localStorageUtils";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useDispatch } from "react-redux";
 import { setApiMeals, setUserMeals } from "../../store/actions/meal";
-
+import Loader from "../../components/Loader";
 
 interface Meal {
   idMeal: string;
@@ -19,8 +19,7 @@ const CategoryMeals = () => {
   const dispatch = useDispatch()
   const { category } = useParams<{ category: string }>();
   const [meals, setMeals] = useState<Meal[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const user = getUser();
   const navigate = useNavigate();
 
@@ -33,7 +32,6 @@ const CategoryMeals = () => {
           dispatch(setApiMeals(meals))
           setLoading(false);
         } catch (error) {
-          setError("Failed to fetch meals");
           setLoading(false);
         }
       };
@@ -42,15 +40,7 @@ const CategoryMeals = () => {
     }
   }, [category]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
-  const checkFavourites = (mealID: any) => {
+  const checkFavourites = (mealID: string) => {
     const username = user?.username;
     const favoriteMeals = JSON.parse(
       localStorage.getItem(`${username}_favorites`) || "[]"
@@ -75,7 +65,7 @@ const CategoryMeals = () => {
         `${username}_favorites`,
         JSON.stringify(updatedFavorites)
       );
-      storeUser(user); // Update user object in localStorage if needed
+      storeUser(user);
       console.log("favo", isFavorite, updatedFavorites);
       const userMealData = {
         user: user,
@@ -83,15 +73,19 @@ const CategoryMeals = () => {
       }
       dispatch(setUserMeals(userMealData))
     } else {
-      navigate("/sign-in"); // Redirect to login page if user is not logged in
+      navigate("/sign-in");
     }
   };
+
+  if (loading) {
+    return <div><Loader /></div>;
+  }
 
   return (
     <div className="meals-container">
       <h1>Meals in: {category}</h1>
       <div className="catMeals-grid">
-        {meals.map((meal) => (
+        {meals?.map((meal: any) => (
           <div key={meal.idMeal} className="catMeals-card">
             <img
               src={meal.strMealThumb}

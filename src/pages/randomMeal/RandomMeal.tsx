@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { fetchRandomMeal } from '../../service/apiService';
 import "./randomMeal.css";
+import Loader from '../../components/Loader';
 
 interface Meal {
     idMeal: string;
@@ -16,16 +17,13 @@ const RandomMeal = () => {
     const RANDOM_URL = "random.php"
     const [randomMeal, setRandomMeal] = useState<any>()
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
 
     const getMeals = async () => {
         try {
           const meals = await fetchRandomMeal(RANDOM_URL);
           setRandomMeal(meals);
-          console.log("@@", meals)
           setLoading(false);
         } catch (error) {
-          setError('Failed to fetch meals');
           setLoading(false);
         }
       };
@@ -35,15 +33,11 @@ const RandomMeal = () => {
       }, []);
 
       if (loading) {
-        return <div>Loading...</div>;
-      }
-    
-      if (error) {
-        return <div>{error}</div>;
+        return <div><Loader /></div>;
       }
       return (
         <div className="random-meal-container">
-          {randomMeal.map((meal: any) => (<>
+          {randomMeal.map((meal: Meal) => (<>
                 <h2>{meal.strMeal}</h2>
               <div key={meal.idMeal} className="randomMeal-card">
               <img src={meal.strMealThumb} alt={meal.strMeal} className="randomMeal-image" />

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { fetchCategories } from '../../service/apiService'; // Adjust the path as per your file structure
-import './menu.css'; // Import the CSS file for styling
+import { fetchCategories } from '../../service/apiService';
+import './menu.css';
+import Loader from "../../components/Loader";
 
 interface Category {
   idCategory: string;
@@ -10,10 +11,9 @@ interface Category {
   strCategoryDescription: string;
 }
 
-const Menu: React.FC = () => {
+const Menu = () => {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +23,6 @@ const Menu: React.FC = () => {
         setCategories(categories);
         setLoading(false);
       } catch (error) {
-        setError('Failed to fetch categories');
         setLoading(false);
       }
     };
@@ -36,18 +35,14 @@ const Menu: React.FC = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
+    return(<><Loader /></>);
   }
 
   return (
     <div className="menu-container">
       <h1>Our Menu</h1>
       <div className="category-grid">
-        {categories.map((category) => (
+        {categories.map((category: any) => (
           <div
             key={category.idCategory}
             className="category-card"

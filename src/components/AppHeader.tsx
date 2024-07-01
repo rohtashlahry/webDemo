@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./AppHeader.css";
 import MenuIcon from "@mui/icons-material/Menu";
+import Constants from "./constants";
 
 const AppHeader = () => {
   const navigate = useNavigate();
-  const [showFlyout, setShowFlyout] = useState(false);
+  const [showFlyout, setShowFlyout] = useState<boolean>(false);
   const menuItems = [
     { title: "Home", link: "/" },
     { title: "About Me", link: "/aboutme" },
@@ -14,8 +15,8 @@ const AppHeader = () => {
     { title: "Random Meals", link: "/random" },
   ];
 
-  const handleMenuRoutes = (item: any) => {
-    navigate(item.link);
+  const handleMenuRoutes = (url: string) => {
+    navigate(url);
     setShowFlyout(false);
   };
   return (
@@ -31,11 +32,9 @@ const AppHeader = () => {
               </div>
             </p>
           </div>
-          <div style={{ fontSize: "10px" }}>
+          <div className="linkedin-text">
             This Web App is Developed by{" "}
-            <a style={{ fontSize: "10px" }} href="https://www.linkedin.com/in/rohtash-lahry/">
-              Rohtash Lahry
-            </a>
+            <span></span><a href={Constants.linkedIn}>Rohtash Lahry</a><span></span>
           </div>
         </div>
       </nav>
@@ -45,7 +44,7 @@ const AppHeader = () => {
       >
         <div className="header-flyoutBars">
           <span
-            style={{ cursor: "pointer" }}
+            className="header-flyoutBars-icon"
             onClick={() => setShowFlyout(!showFlyout)}
           >
             <MenuIcon />
@@ -55,18 +54,16 @@ const AppHeader = () => {
           <div>
             <nav>
               <div>
-                {menuItems &&
-                  menuItems.map((item) => {
-                    return (
-                      <p
-                        style={{ cursor: "pointer" }}
-                        onClick={() => handleMenuRoutes(item)}
-                      >
-                        {item.title}
-                      </p>
-                      // <Link to={item.link}>{item.title}</Link>
-                    );
-                  })}
+                {menuItems?.map((item: any) => {
+                  return (
+                    <p
+                      className="menu-items"
+                      onClick={() => handleMenuRoutes(item.link)}
+                    >
+                      {item.title}
+                    </p>
+                  );
+                })}
               </div>
             </nav>
           </div>

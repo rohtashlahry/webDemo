@@ -50,24 +50,33 @@ nav .dropdown {
   text-decoration: none;
   color: #fff;
 }
-.header-flyout{
+.header-flyout {
   background-color: #333;
   height: 100vh;
   position: absolute;
   top: 0;
 }
-.header-flyoutBars{
-  /* justify-content: right; */
+.header-flyoutBars {
   text-align: right;
   padding: 10px 20px;
-  color: #fff
+  color: #fff;
 }
-.main-header{
+.main-header {
   padding-left: 100px;
   height: 30px;
 }
-.main-header-top{
+.main-header-top {
   display: flex;
   justify-content: space-between;
 }
-
+.header-flyoutBars-icon,
+.menu-items {
+  cursor: pointer;
+}
+.linkedin-text,
+.linkedin-text a {
+  margin-top: 5px;
+  align-items: center;
+  display: inline;
+  font-size: 10px;
+}
