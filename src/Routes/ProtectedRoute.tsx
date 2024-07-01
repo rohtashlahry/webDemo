@@ -7,6 +7,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ redirectTo }) => {
+  //debugger
   const user = getUser();
   return user ? <Outlet /> : <Navigate to={redirectTo} replace />;
 };

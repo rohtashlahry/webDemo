@@ -20,6 +20,7 @@ import { getUser } from "../utils/localStorageUtils";
 import ProtectedRoute from "./ProtectedRoute";
 
 const RoutesConfig = () => {
+  const user = getUser();
   return (
     <Router>
       <AppHeader />
@@ -30,11 +31,17 @@ const RoutesConfig = () => {
           <Route path="/menu" element={<Menu />} />
           <Route path="/random" element={<RandomMeal />} />
           <Route path="/category/:category" element={<CategoryMeals />} />
+          <Route
+            path="/sign-in"
+            element={user ? <UserDashboard /> : <SignIn />}
+          />
+          <Route
+            path="/sign-up"
+            element={user ? <UserDashboard /> : <SignUp />}
+          />
           <Route element={<ProtectedRoute redirectTo="/sign-in" />}>
             <Route path="/dashboard" element={<UserDashboard />} />
             <Route path="/favourites" element={<Favourites />} />
-            <Route path="/sign-up" element={<UserDashboard />} />
-            <Route path="/sign-in" element={<UserDashboard />} />
           </Route>
         </Routes>
       </Container>
